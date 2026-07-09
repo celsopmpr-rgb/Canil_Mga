@@ -1,11 +1,5 @@
-# Canil_Mga v2.0.0-alpha1 Revisada
+# Canil_Mga v2.1.0
 
-Sistema PWA simples, rápido e offline para registro de BOU, apreensões, drogas e atividades sem ilicitude.
+Sistema de Registro Operacional do Canil.
 
-Senha inicial: **1234**
-
-Arquivos principais:
-- `index.html`: sistema principal
-- `Canil_Mga.html`: redirecionamento para compatibilidade
-- `manifest.json`: instalação PWA
-- `sw.js`: funcionamento offline
+Senha inicial: 1234.
