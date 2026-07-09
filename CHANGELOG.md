@@ -1,8 +1,7 @@
-## v2.1.0
+# Changelog
 
-- Login com alteração de senha.
-- Dashboard mensal.
-- Cadastro de BOU.
-- Apreensões: pessoas, veículos, armas e drogas.
-- Sem ilicitude: visitas e apresentações.
-- Consulta, edição/exclusão e backup JSON.
+## v2.1.1
+- Nome oficial alterado para SIO-K9.
+- Subtítulo: Sistema Integrado de Operações - K9.
+- Manifest PWA e service worker incluídos.
+- Mantidas as funções de BOU, sem ilicitude, dashboard, consulta, edição/exclusão e backup.
