@@ -1,8 +1,7 @@
-# SIO-K9 v0.3.0
+# SIO-K9 v0.4.0
 
-- Data, número do BOU e natureza obrigatórios.
-- BOU ordenados por data crescente.
-- Data incluída na relação mensal.
-- Campo opcional para cão empregado.
-- Busca também pelo cão.
-- Mantido o mesmo banco local para preservar registros.
+- Novo campo Instituição.
+- Novo campo Local.
+- Alteração para Nº de participantes do evento.
+- Instituição/local na consulta e no fechamento.
+- Botão Exportar PDF / Drive.

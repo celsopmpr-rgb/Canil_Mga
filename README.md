@@ -1,13 +1,8 @@
-# SIO-K9 v0.3.0 — Operacional
+# SIO-K9 v0.4.0
 
-- Login com senha inicial 1234
-- Cadastro de BOU com data, número e natureza obrigatórios
-- Campo opcional para cão empregado
-- Pessoas, veículos e armas
-- Drogas em quilos e gramas
-- Visitas ao canil e apresentações
-- Consulta, edição e exclusão
-- Fechamento mensal em ordem crescente de data
-- Relação com data, número do BOU e natureza
-- Impressão/salvamento em PDF
-- Backup e restauração
+- Campo Instituição nas visitas ao canil.
+- Campo Local nas apresentações.
+- Nº de participantes do evento.
+- Tabela de atividades sem ilicitude no fechamento mensal.
+- Exportação geral em PDF, com opção de compartilhar no Google Drive.
+- Backup JSON mantido.
