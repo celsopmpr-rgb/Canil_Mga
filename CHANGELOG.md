@@ -1,7 +1,8 @@
-# Changelog
+# SIO-K9 v0.3.0
 
-## v2.1.1
-- Nome oficial alterado para SIO-K9.
-- Subtítulo: Sistema Integrado de Operações - K9.
-- Manifest PWA e service worker incluídos.
-- Mantidas as funções de BOU, sem ilicitude, dashboard, consulta, edição/exclusão e backup.
+- Data, número do BOU e natureza obrigatórios.
+- BOU ordenados por data crescente.
+- Data incluída na relação mensal.
+- Campo opcional para cão empregado.
+- Busca também pelo cão.
+- Mantido o mesmo banco local para preservar registros.
