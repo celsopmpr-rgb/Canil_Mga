@@ -1,8 +1,6 @@
-# SIO-K9 v0.5.0
+# SIO-K9 v0.5.1
 
-- Integração com Google Apps Script.
-- Backup automático no Drive.
-- Backup manual imediato.
-- Teste de conexão.
-- Restauração do arquivo SIO-K9_BACKUP_ATUAL.json.
-- Histórico continua sendo gerenciado pelo Apps Script.
+- Corrigido o envio do backup ao Google Apps Script.
+- O envio agora utiliza formulário oculto, evitando bloqueios de CORS e redirecionamento.
+- O teste de conexão continua usando doGet.
+- O backup manual e automático passam a executar doPost no Apps Script.

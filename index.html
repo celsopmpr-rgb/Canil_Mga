@@ -34,7 +34,7 @@ label{font-size:13px;color:#cbd5e1;font-weight:bold;margin:7px 0 5px;display:blo
 </head>
 <body><div id="app"></div>
 <script>
-const VERSION='0.5.0';
+const VERSION='0.5.1';
 const DB='canil_mga_db_v21'; // mantém o mesmo banco das versões anteriores
 const STORE='registros', CFG='config';
 let state={tab:'dash',registros:[],editId:null,msg:'',mesDash:new Date().toISOString().slice(0,7),mesFechamento:new Date().toISOString().slice(0,7)};
@@ -59,7 +59,72 @@ async function setCfg(k,v){const s=await store(CFG,'readwrite');return new Promi
 async function getDriveConfig(){return {url:(await getCfg('driveUrl'))||'',token:(await getCfg('driveToken'))||'',auto:(await getCfg('driveAuto'))===true,last:(await getCfg('driveLast'))||''}}
 async function saveDriveConfig(){const url=$('#driveUrl').value.trim(),token=$('#driveToken').value.trim(),auto=$('#driveAuto').checked;if(url&&!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec(?:\?.*)?$/.test(url)){alert('Cole a URL do aplicativo da web terminada em /exec.');return}if((url||token)&&(!url||token.length<16)){alert('Informe a URL /exec e um token com pelo menos 16 caracteres.');return}await setCfg('driveUrl',url);await setCfg('driveToken',token);await setCfg('driveAuto',auto);state.msg='Configuração do Google Drive salva.';render()}
 function scheduleDriveBackup(){clearTimeout(driveBackupTimer);driveBackupTimer=setTimeout(()=>sendDriveBackup(false),1800)}
-async function sendDriveBackup(manual=true){const c=await getDriveConfig();if(!c.url||!c.token){if(manual)alert('Configure primeiro a URL /exec e o token do Google Drive.');return false}if(!manual&&!c.auto)return false;const payload={token:c.token,app:'SIO-K9',version:VERSION,device:navigator.userAgent,exportedAt:new Date().toISOString(),registros:state.registros};try{await fetch(c.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload)});const now=new Date().toISOString();await setCfg('driveLast',now);if(manual){state.msg='Backup enviado ao Google Drive. Confira a pasta SIO-K9_BACKUPS.';render()}return true}catch(err){if(manual)alert('Não foi possível enviar o backup: '+err.message);return false}}
+async function sendDriveBackup(manual=true){
+  const c=await getDriveConfig();
+  if(!c.url||!c.token){
+    if(manual)alert('Configure primeiro a URL /exec e o token do Google Drive.');
+    return false;
+  }
+  if(!manual&&!c.auto)return false;
+
+  const payload={
+    token:c.token,
+    app:'SIO-K9',
+    version:VERSION,
+    device:navigator.userAgent,
+    exportedAt:new Date().toISOString(),
+    registros:state.registros
+  };
+
+  try{
+    // Envio por formulário oculto: mais compatível com Google Apps Script
+    // e não depende de CORS/fetch para executar o doPost.
+    let iframe=document.getElementById('sioK9BackupFrame');
+    if(!iframe){
+      iframe=document.createElement('iframe');
+      iframe.id='sioK9BackupFrame';
+      iframe.name='sioK9BackupFrame';
+      iframe.style.display='none';
+      document.body.appendChild(iframe);
+    }
+
+    const form=document.createElement('form');
+    form.method='POST';
+    form.action=c.url;
+    form.target='sioK9BackupFrame';
+    form.style.display='none';
+
+    const tokenInput=document.createElement('input');
+    tokenInput.type='hidden';
+    tokenInput.name='token';
+    tokenInput.value=c.token;
+
+    const payloadInput=document.createElement('input');
+    payloadInput.type='hidden';
+    payloadInput.name='payload';
+    payloadInput.value=JSON.stringify(payload);
+
+    form.appendChild(tokenInput);
+    form.appendChild(payloadInput);
+    document.body.appendChild(form);
+    form.submit();
+
+    setTimeout(()=>form.remove(),1500);
+
+    const now=new Date().toISOString();
+    await setCfg('driveLast',now);
+
+    if(manual){
+      alert('Backup enviado. Aguarde alguns segundos e confira a pasta SIO-K9_BACKUPS no Google Drive.');
+      state.msg='Solicitação de backup enviada ao Google Drive.';
+      render();
+    }
+    return true;
+  }catch(err){
+    if(manual)alert('Não foi possível enviar o backup: '+err.message);
+    return false;
+  }
+}
 async function testDriveConnection(){const c=await getDriveConfig();if(!c.url||!c.token){alert('Salve a URL e o token primeiro.');return}jsonpDrive(c.url,'status',c.token,data=>{if(data&&data.ok)alert('Conexão confirmada. O serviço de backup está online.');else alert('Falha na conexão: '+(data?.error||'resposta inválida'))})}
 function jsonpDrive(url,action,token,callback){const cb='sioK9Cb_'+Date.now();const s=document.createElement('script');let done=false;window[cb]=data=>{done=true;cleanup();callback(data)};function cleanup(){delete window[cb];s.remove()}s.onerror=()=>{cleanup();alert('Não foi possível consultar o Google Drive. Confira a URL, o token e a implantação.')};s.src=url+(url.includes('?')?'&':'?')+'action='+encodeURIComponent(action)+'&token='+encodeURIComponent(token)+'&callback='+encodeURIComponent(cb)+'&_='+Date.now();document.head.appendChild(s);setTimeout(()=>{if(!done){cleanup();alert('A consulta ao Google Drive demorou demais.')}},15000)}
 async function restoreLatestDrive(){const c=await getDriveConfig();if(!c.url||!c.token){alert('Configure a URL e o token primeiro.');return}if(!confirm('Restaurar o backup mais recente do Google Drive? Registros com o mesmo ID serão atualizados.'))return;jsonpDrive(c.url,'latest',c.token,async data=>{try{if(!data?.ok)throw new Error(data?.error||'Falha ao consultar backup');if(!data.found||!data.backup)throw new Error('Nenhum backup foi encontrado no Drive.');const rs=data.backup.registros;if(!Array.isArray(rs))throw new Error('Backup inválido.');for(const r of rs)await put(r);state.msg=`${rs.length} registros restaurados do Google Drive.`;await refresh()}catch(err){alert('Não foi possível restaurar: '+err.message)}})}
