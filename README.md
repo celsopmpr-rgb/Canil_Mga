@@ -1,10 +1,8 @@
-# SIO-K9 v0.5.1 — Correção do backup no Drive
+# SIO-K9 v0.5.3
 
-Esta versão corrige o caso em que a conexão era confirmada, mas nenhuma execução doPost aparecia no Apps Script.
+Atualização da tela Consultar:
+- busca contínua no celular, sem perda de foco do teclado;
+- registros mais recentes no topo;
+- datas exibidas no padrão brasileiro.
 
-Após atualizar:
-1. Abra Backup.
-2. Confira se URL, token e opção automática continuam preenchidos.
-3. Clique em Fazer backup agora.
-4. Aguarde alguns segundos.
-5. Confira a pasta SIO-K9_BACKUPS e a tela Execuções do Apps Script.
+Publique o conteúdo deste pacote no Netlify.
