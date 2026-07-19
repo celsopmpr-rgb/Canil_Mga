@@ -1,4 +1,4 @@
-# SIO-K9 v0.5.3
+# SIO-K9 v0.5.4
 
 Atualização da tela Consultar:
 - busca contínua no celular, sem perda de foco do teclado;
