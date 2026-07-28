@@ -1,3 +1,10 @@
+# SIO-K9 v0.6.0
+
+- Módulo de mídias refeito para confirmar no Google Drive cada upload antes de atualizar os contadores.
+- A consulta passa a sincronizar os contadores com os arquivos realmente existentes no Drive.
+- Registros antigos permanecem compatíveis; mídias de teste sem vínculo real são corrigidas para zero ao consultar.
+- Nenhuma alteração no fechamento mensal ou nos demais registros.
+
 # SIO-K9 v0.5.4
 
 - Corrigido o campo de busca da tela Consultar no celular: o teclado não fecha mais após cada letra digitada.

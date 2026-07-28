@@ -1,4 +1,4 @@
-# SIO-K9 v0.5.5 — Módulo de Mídias
+# SIO-K9 v0.6.0 — Módulo de Mídias
 
 Novidades:
 - seção Mídias no cadastro do BOU;
