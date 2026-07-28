@@ -25,3 +25,8 @@
 - Galeria de fotos e acesso aos vídeos pelo Google Drive.
 - Fechamento mensal permanece sem informações de mídia.
 - Limite de 25 MB por arquivo nesta versão.
+
+## 0.5.5.1
+- Na edição do BOU, exibe as quantidades de fotos e vídeos já salvos.
+- Mantém separado o total já salvo e os novos arquivos selecionados.
+- Adicionado botão para visualizar as mídias já salvas diretamente na tela de edição.
