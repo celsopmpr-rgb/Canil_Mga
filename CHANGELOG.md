@@ -37,3 +37,11 @@
 - Na edição do BOU, exibe as quantidades de fotos e vídeos já salvos.
 - Mantém separado o total já salvo e os novos arquivos selecionados.
 - Adicionado botão para visualizar as mídias já salvas diretamente na tela de edição.
+
+## v0.6.1
+- Mídias disponíveis também em todas as atividades da aba Sem ilicitude.
+- Nova opção Instrução, com data, horários, total automático, assunto e instrutor.
+- Novas opções Serviço Diário: Treinamento e Patrulhamento.
+- Cálculo automático de horas, inclusive quando o serviço termina após a meia-noite.
+- Consulta, edição e visualização de mídias para todos os tipos de registro.
+- Compatibilidade mantida com todos os registros das versões anteriores.
